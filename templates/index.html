@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Height to Weight Predictor</title>
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Segoe UI", Arial, sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            background:
+                radial-gradient(circle at top left, #3b82f6 0%, transparent 35%),
+                radial-gradient(circle at bottom right, #8b5cf6 0%, transparent 35%),
+                linear-gradient(135deg, #0f172a, #111827, #1e1b4b);
+
+            color: white;
+            padding: 20px;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 950px;
+
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+
+            border-radius: 28px;
+
+            overflow: hidden;
+
+            box-shadow:
+                0 25px 60px rgba(0, 0, 0, 0.45);
+        }
+
+        /* LEFT SECTION */
+
+        .left {
+            padding: 55px 45px;
+
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+
+            background: linear-gradient(
+                145deg,
+                rgba(59, 130, 246, 0.25),
+                rgba(139, 92, 246, 0.15)
+            );
+        }
+
+        .logo {
+            width: 65px;
+            height: 65px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            border-radius: 18px;
+
+            font-size: 30px;
+
+            background: linear-gradient(
+                135deg,
+                #3b82f6,
+                #8b5cf6
+            );
+
+            box-shadow: 0 10px 30px rgba(59, 130, 246, 0.35);
+
+            margin-bottom: 25px;
+        }
+
+        .left h1 {
+            font-size: 42px;
+            line-height: 1.15;
+
+            margin-bottom: 18px;
+
+            background: linear-gradient(
+                90deg,
+                #ffffff,
+                #93c5fd,
+                #c4b5fd
+            );
+
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .left p {
+            color: #cbd5e1;
+            font-size: 17px;
+            line-height: 1.7;
+
+            max-width: 420px;
+        }
+
+        .features {
+            margin-top: 35px;
+        }
+
+        .feature {
+            display: flex;
+            align-items: center;
+
+            margin-bottom: 16px;
+
+            color: #e2e8f0;
+        }
+
+        .feature-icon {
+            width: 36px;
+            height: 36px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            margin-right: 12px;
+
+            border-radius: 10px;
+
+            background: rgba(59, 130, 246, 0.2);
+
+            color: #93c5fd;
+        }
+
+        /* RIGHT SECTION */
+
+        .right {
+            padding: 55px 45px;
+
+            background: rgba(15, 23, 42, 0.65);
+
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .right h2 {
+            font-size: 30px;
+            margin-bottom: 8px;
+        }
+
+        .subtitle {
+            color: #94a3b8;
+            margin-bottom: 30px;
+        }
+
+        label {
+            display: block;
+
+            color: #cbd5e1;
+
+            font-size: 14px;
+            font-weight: 600;
+
+            margin-bottom: 10px;
+        }
+
+        .input-box {
+            position: relative;
+        }
+
+        .input-box span {
+            position: absolute;
+
+            right: 18px;
+            top: 50%;
+
+            transform: translateY(-50%);
+
+            color: #94a3b8;
+
+            font-size: 14px;
+        }
+
+        input {
+            width: 100%;
+
+            padding: 17px 70px 17px 18px;
+
+            border-radius: 14px;
+
+            border: 1px solid #334155;
+
+            background: rgba(30, 41, 59, 0.8);
+
+            color: white;
+
+            font-size: 16px;
+
+            outline: none;
+
+            transition: 0.3s;
+        }
+
+        input::placeholder {
+            color: #64748b;
+        }
+
+        input:focus {
+            border-color: #60a5fa;
+
+            box-shadow:
+                0 0 0 4px rgba(59, 130, 246, 0.15);
+
+            background: rgba(30, 41, 59, 1);
+        }
+
+        button {
+            width: 100%;
+
+            margin-top: 22px;
+
+            padding: 17px;
+
+            border: none;
+
+            border-radius: 14px;
+
+            background: linear-gradient(
+                135deg,
+                #3b82f6,
+                #8b5cf6
+            );
+
+            color: white;
+
+            font-size: 16px;
+            font-weight: 700;
+
+            cursor: pointer;
+
+            transition: 0.3s;
+
+            box-shadow:
+                0 10px 25px rgba(59, 130, 246, 0.25);
+        }
+
+        button:hover {
+            transform: translateY(-3px);
+
+            box-shadow:
+                0 15px 35px rgba(59, 130, 246, 0.4);
+        }
+
+        button:active {
+            transform: translateY(0);
+        }
+
+        /* RESULT */
+
+        .result {
+            margin-top: 30px;
+
+            padding: 22px;
+
+            border-radius: 18px;
+
+            background: linear-gradient(
+                135deg,
+                rgba(34, 197, 94, 0.12),
+                rgba(59, 130, 246, 0.12)
+            );
+
+            border: 1px solid rgba(96, 165, 250, 0.25);
+
+            text-align: center;
+
+            animation: appear 0.5s ease;
+        }
+
+        .result-title {
+            color: #94a3b8;
+
+            font-size: 14px;
+
+            margin-bottom: 8px;
+        }
+
+        .result-value {
+            font-size: 38px;
+
+            font-weight: 800;
+
+            background: linear-gradient(
+                90deg,
+                #60a5fa,
+                #a78bfa
+            );
+
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .result-height {
+            margin-top: 8px;
+
+            color: #cbd5e1;
+
+            font-size: 14px;
+        }
+
+        .footer {
+            margin-top: 25px;
+
+            text-align: center;
+
+            color: #64748b;
+
+            font-size: 12px;
+        }
+
+        @keyframes appear {
+
+            from {
+                opacity: 0;
+                transform: translateY(15px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+
+        }
+
+        /* RESPONSIVE */
+
+        @media (max-width: 750px) {
+
+            .container {
+                grid-template-columns: 1fr;
+            }
+
+            .left {
+                padding: 40px 30px;
+            }
+
+            .right {
+                padding: 40px 30px;
+            }
+
+            .left h1 {
+                font-size: 34px;
+            }
+
+        }
+
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+
+        <!-- LEFT SIDE -->
+
+        <div class="left">
+
+            <div class="logo">
+                ⚖️
+            </div>
+
+            <h1>
+                Height to<br>
+                Weight Predictor
+            </h1>
+
+            <p>
+                Predict the expected weight of a person based
+                on their height using a Machine Learning
+                regression model.
+            </p>
+
+            <div class="features">
+
+                <div class="feature">
+                    <div class="feature-icon">✓</div>
+                    <span>Machine Learning Powered</span>
+                </div>
+
+                <div class="feature">
+                    <div class="feature-icon">⚡</div>
+                    <span>Instant Prediction</span>
+                </div>
+
+                <div class="feature">
+                    <div class="feature-icon">📊</div>
+                    <span>Simple Linear Regression</span>
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- RIGHT SIDE -->
+
+        <div class="right">
+
+            <h2>Make a Prediction</h2>
+
+            <p class="subtitle">
+                Enter your height to estimate your weight.
+            </p>
+
+            <form action="/predict" method="post">
+
+                <label for="height">
+                    Height
+                </label>
+
+                <div class="input-box">
+
+                    <input
+                        type="number"
+                        id="height"
+                        name="height"
+                        placeholder="Enter your height"
+                        step="any"
+                        min="1"
+                        required
+                    >
+
+                    <span>cm</span>
+
+                </div>
+
+                <button type="submit">
+                    🔮 Predict Weight
+                </button>
+
+            </form>
+
+
+            {% if result is defined %}
+
+            <div class="result">
+
+                <div class="result-title">
+                    Predicted Weight
+                </div>
+
+                <div class="result-value">
+                    {{ result }} kg
+                </div>
+
+                <div class="result-height">
+                    Based on height: {{ a }} cm
+                </div>
+
+            </div>
+
+            {% endif %}
+
+
+            <div class="footer">
+                Powered by Python • Flask • Machine Learning
+            </div>
+
+        </div>
+
+    </div>
+
+</body>
+
+</html>
